@@ -269,7 +269,7 @@ static inline const char * white()   { return canColorPrint() ? "\033[37;1m" : "
 // ========================================================
 
 // Defined in cxx_demangle.cpp
-extern std::string demangle(const char * mangledName, bool baseNameOnly);
+std::string demangle(const std::string & mangledName, bool baseNameOnly = true);
 
 // ========================================================
 
@@ -474,10 +474,10 @@ static void dumpExportsSection(const pe::ImageDOSHeader * dosHeaderPtr, const pe
         {
             if (ordinals[j] == i)
             {
-                const char * mangledName = reinterpret_cast<const char *>(base + (names[j] - delta));
+                std::string mangledName = reinterpret_cast<const char *>(base + (names[j] - delta));
                 tempName.ord = toHexa(ordinals[j], 3) + " ";
                 tempName.mangled = truncate(mangledName);
-                tempName.demangled = demangle(mangledName, true);
+                tempName.demangled = demangle(mangledName);
                 funcNames.emplace_back(std::move(tempName));
             }
         }
@@ -486,10 +486,10 @@ static void dumpExportsSection(const pe::ImageDOSHeader * dosHeaderPtr, const pe
         // ".edata" section, and is an RVA to the DllName.EntryPointName
         if ((entryPointRVA >= exportsStartRVA) && (entryPointRVA <= exportsEndRVA))
         {
-            const char * mangledName = reinterpret_cast<const char *>(base + (entryPointRVA - delta));
+            std::string mangledName = reinterpret_cast<const char *>(base + (entryPointRVA - delta));
             tempName.ord = "FWD ";
             tempName.mangled = truncate(mangledName);
-            tempName.demangled = demangle(mangledName, true);
+            tempName.demangled = demangle(mangledName);
             funcNames.emplace_back(std::move(tempName));
         }
     }
@@ -672,7 +672,7 @@ static void dumpImportsSection(const pe::ImageDOSHeader * dosHeaderPtr, const pe
                 const auto importNamePtr  = reinterpret_cast<const pe::ImageImportByName *>(addrImportName);
 
                 std::cout << "  " << toHexa(importNamePtr->ordinalHint, 4);
-                std::cout << "  " << color::yellow() << demangle(importNamePtr->funcName, true) << color::restore();
+                std::cout << "  " << color::yellow() << demangle(importNamePtr->funcName) << color::restore();
             }
 
             std::cout << "\n";

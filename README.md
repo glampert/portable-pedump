@@ -1,14 +1,13 @@
 
 # Portable PE dump
 
-A simple command line tool to dump textual information about Microsoft's Portable Executables (PEs)
-
+A simple command line tool to dump textual information about Microsoft's Portable Executables (PEs).
 Supports 32-bits PEs and partially supports 64-bits ones, but currently no imports/exports for 64-bits PEs.
 
 It can dump:
 
 - DOS header & DOS stub data
-- NT headers
+- NT headers (AKA the PE header)
 - A list of all sections with flags
 - A list of all exports (32-bits only)
 - A list of all imports (32-bits only)
@@ -22,12 +21,10 @@ It should build on any Unix-based system with no hassle, but I've only tested it
 on Mac OSX. A Windows build should also be easy, just a matter of creating a VS
 project for the two source files (`portable_pe_dump.cpp` and `cxx_demangle.cpp`).
 
-Requires a C++11 compiler.
-
 # Build & Run
 
 To build, you can use the provided `Makefile` or directly via the command line, since
-the whole project consists of only a pair of files.
+the whole project consists of only a pair of files. **Requires a C++11 compiler**.
 
 Running the output `ppedump` will print the available options:
 
