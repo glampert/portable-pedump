@@ -22,6 +22,7 @@
 #include <cctype>
 #include <ctime>
 
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <memory>
@@ -335,11 +336,11 @@ static inline std::string toHexa(std::uint32_t val, int pad = 0)
     char buffer[128];
     if (pad > 0)
     {
-        std::sprintf(buffer, "0x%0*X", pad, val);
+        std::snprintf(buffer, sizeof(buffer), "0x%0*X", pad, val);
     }
     else
     {
-        std::sprintf(buffer, "0x%X", val);
+        std::snprintf(buffer, sizeof(buffer), "0x%X", val);
     }
     return buffer;
 }
@@ -348,7 +349,7 @@ static inline std::string sectionName(const char * name)
 {
     char buffer[128];
     // Paint the name red if printing to a terminal.
-    std::sprintf(buffer, "%s %-8.8s %s", color::red(), name, color::restore());
+    std::snprintf(buffer, sizeof(buffer), "%s %-8.8s %s", color::red(), name, color::restore());
     return buffer;
 }
 
@@ -708,7 +709,7 @@ static inline std::string hexDWord(std::uint32_t dw)
     b.b8[3] = a.b8[0];
 
     char buffer[128];
-    std::sprintf(buffer, "%08X ", b.u32);
+    std::snprintf(buffer, sizeof(buffer), "%08X ", b.u32);
     return buffer;
 }
 

@@ -17,16 +17,15 @@ other than Windows. To achieve that, no system specific libraries are used,
 so symbol name demangling is hand-rolled and not very accurate, but good
 enough for most cases.
 
-It should build on any Unix-based system with no hassle, but I've only tested it
-on Mac OSX. A Windows build should also be easy, just a matter of creating a VS
-project for the two source files (`portable_pe_dump.cpp` and `cxx_demangle.cpp`).
-
 # Build & Run
 
 To build, you can use the provided `Makefile` or directly via the command line, since
-the whole project consists of only a pair of files. **Requires a C++11 compiler**.
+the whole project consists of a pair of files (`portable_pe_dump.cpp` and `cxx_demangle.cpp`). 
+Note: **Requires a C++11 compiler**.
 
-Running the output `ppedump` will print the available options:
+There's also a Visual Studio 2015 workspace for a Windows build.
+
+Running the output `ppedump` executable will print the available options:
 
 <pre>
 Usage:
